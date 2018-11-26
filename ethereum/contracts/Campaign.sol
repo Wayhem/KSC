@@ -47,8 +47,10 @@ contract Campaign {
             msg.value > minimumContri,
             "Minimal contribution not reached"
             );
-        approvers[msg.sender] = true;
-        approversCount++;
+        if (approvers[msg.sender] == false){
+            approvers[msg.sender] = true;
+            approversCount++;
+        }
     }
     
     function createRequest(string description, uint value, address recipient) public restricted {
