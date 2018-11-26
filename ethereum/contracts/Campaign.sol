@@ -30,7 +30,10 @@ contract Campaign {
     uint public approversCount;
     
     modifier restricted(){
-        require(msg.sender == manager);
+        require(
+            msg.sender == manager,
+            "Operation restricted for manager use"
+            );
         _;
     }
     
@@ -40,18 +43,21 @@ contract Campaign {
     }
     
     function contribute() public payable{
-        require(msg.value > minimumContri);
+        require(
+            msg.value > minimumContri,
+            "Minimal contribution not reached"
+            );
         approvers[msg.sender] = true;
         approversCount++;
     }
     
     function createRequest(string description, uint value, address recipient) public restricted {
         Request memory newRequest = Request({
-           description: description,
-           value: value,
-           recipient: recipient,
-           complete: false,
-           yesCount: 0
+            description: description,
+            value: value,
+            recipient: recipient,
+            complete: false,
+            yesCount: 0
         });
         
         requests.push(newRequest);
@@ -60,8 +66,14 @@ contract Campaign {
     function approveRequest(uint index) public {
         Request storage request = requests[index];
         
-        require(approvers[msg.sender]);
-        require(!request.approvals[msg.sender]);
+        require(
+            approvers[msg.sender],
+            "Not a contributor to the campaign"
+            );
+        require(
+            !request.approvals[msg.sender],
+            "Already approved request"
+            );
         
         request.approvals[msg.sender] = true;
         request.yesCount++;
@@ -70,8 +82,14 @@ contract Campaign {
     function finalizeRequest(uint index) public restricted {
         Request storage request = requests[index];
         
-        require(request.yesCount > (approversCount / 2));
-        require(!request.complete);
+        require(
+            request.yesCount > (approversCount / 2),
+            "Not enough approvals from contributors"
+        );
+        require(
+            !request.complete,
+            "Request already completed"
+            );
         
         request.recipient.transfer(request.value);
         request.complete = true;
