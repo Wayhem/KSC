@@ -12,10 +12,13 @@
   "author": "Jose Villarroel",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
     "ganache-cli": "^6.2.3",
+    "jsonwebtoken": "^8.4.0",
     "mocha": "^5.2.0",
+    "mongoose": "^5.3.14",
     "next": "^4.1.4",
     "next-routes": "^1.4.2",
     "react": "^16.6.3",
