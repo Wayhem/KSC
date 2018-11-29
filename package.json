@@ -5,17 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
     "start": "next start"
   },
   "author": "Jose Villarroel",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.16.4",
     "fs-extra": "^7.0.1",
     "ganache-cli": "^6.2.3",
     "mocha": "^5.2.0",
     "next": "^4.1.4",
+    "next-routes": "^1.4.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "semantic-ui-css": "^2.4.1",
