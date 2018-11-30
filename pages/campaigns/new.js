@@ -4,6 +4,7 @@ import { Form, Button, Input, Message } from 'semantic-ui-react';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
 import { Router } from '../../routes';
+import withAuth from  '../../utils/withAuth';
 
 class CampaignNew extends Component {
 
@@ -17,12 +18,12 @@ class CampaignNew extends Component {
         this.setState({loadingB: true, errorMessage: ''});
         try {
             const accounts = await web3.eth.getAccounts();
-            await factory.methods
+            const results = await factory.methods
                 .createCampaign(this.state.minimumContribution)
                 .send({
                     from: accounts[0]
                 });
-            
+            console.log(results);
             Router.pushRoute('/');
         } catch (err){
             this.setState({errorMessage: err.message});
@@ -51,4 +52,4 @@ class CampaignNew extends Component {
     }
 }
 
-export default CampaignNew;
+export default withAuth(CampaignNew);
