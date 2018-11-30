@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
 import Layout from '../components/layout';
 import { Form } from 'semantic-ui-react';
+import { Router } from '../routes';
+import Domain from '../domain';
 
 class UserRegister extends Component { 
 
     state = {
         username: '',
-        password: ''
+        password: '',
+        domain: ''
+    }
+
+    routeRoot() {
+        Router.pushRoute('/');
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
+        this.state.domain = Domain;
         let username = this.state.username;
         let password = this.state.password;
-        console.log(username);
-        console.log(password);
         
-        fetch('http://localhost:3000/register', {
+        fetch(`${this.state.domain}/register`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -27,6 +33,50 @@ class UserRegister extends Component {
                 password: password
             })
         })
+        .then(res => res.json())
+        .then(data => {
+            this.setToken(data.id_token);
+            this.setProfile(data);
+            this.routeRoot();
+        });
+
+        // fetch('http://localhost:3000/token', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         username: username,
+        //         password: password
+        //     })
+        // })
+        // .then(res => res.json())
+        // .then(data => {
+        //     // this.setToken(data.id_token);
+        // });
+
+        // const token = localStorage.getItem('id_token');
+
+        // fetch('http://localhost:3000/user', {
+        //     method: 'GET',
+        //     headers: {
+        //       'Authorization': 'Bearer ' + token
+        //     }
+        //   })
+        //   .then(res => res.json())
+        //   .then(data => { this.setProfile(data) })
+        //   .catch(err => { console.log(err) });
+    }
+
+    setToken(idToken){
+        // Saves user token to localStorage
+        localStorage.setItem('id_token', idToken)
+    }
+
+    setProfile(profile){
+        // Saves profile data to localStorage
+        localStorage.setItem('profile', JSON.stringify(profile))
     }
 
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
