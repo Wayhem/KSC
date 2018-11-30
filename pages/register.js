@@ -84,6 +84,7 @@ class UserRegister extends Component {
     render(){
         return (
         <Layout>
+            <h3>Register</h3>
             <Form onSubmit={this.handleSubmit}>
                 <Form.Group>
                     <Form.Input placeholder='username' name='username' value={this.state.username} onChange={this.handleChange} />

@@ -5,9 +5,11 @@ import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
 import { Router } from '../../routes';
 import withAuth from  '../../utils/withAuth';
+import AuthService from '../../utils/AuthService';
+import Domain from '../../domain';
+const Auth = new AuthService(Domain);
 
 class CampaignNew extends Component {
-
     state={
         minimumContribution: '',
         errorMessage: '',
@@ -18,12 +20,27 @@ class CampaignNew extends Component {
         this.setState({loadingB: true, errorMessage: ''});
         try {
             const accounts = await web3.eth.getAccounts();
-            const results = await factory.methods
+            await factory.methods
                 .createCampaign(this.state.minimumContribution)
                 .send({
                     from: accounts[0]
                 });
-            console.log(results);
+            const campaigns = await factory.methods.getDeployedCampaigns().call();
+            const token = localStorage.getItem('id_token');
+            const campaign = campaigns[campaigns.length-1];
+            console.log(campaign);
+            fetch(`${Domain}/user`, {
+                method: 'PUT',
+                headers: {
+                'Authorization': 'Bearer ' + token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ campaign })
+            })
+            .then(res => res.json())
+            .then(data => { Auth.setProfile(data) })
+            .catch(err => { console.log(err) });
             Router.pushRoute('/');
         } catch (err){
             this.setState({errorMessage: err.message});
