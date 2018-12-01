@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
 import { Link } from '../routes';
+import AuthService from '../utils/AuthService';
 
 export default class Header extends Component{
-    state = {}
-
+    
     handleItemClick = (e) => {
-        this.logout()
+        const Auth = new AuthService(Domain)
+        Auth.logout()
     }
 
     handleHomeClick = (e) => {
         e.preventDefault();
         window.location.replace('/home');
     }
-
-    logout(){
-        localStorage.removeItem('id_token');
-        localStorage.removeItem('profile');
-    }
-
-    getToken(){
-        return localStorage.getItem('id_token')
-    }
     
     render(){
-        const { activeItem } = this.state
 
         return(
             <Menu style={{ marginTop: '15px' }}> 
