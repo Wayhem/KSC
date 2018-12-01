@@ -39,34 +39,6 @@ class UserRegister extends Component {
             this.setProfile(data);
             this.routeRoot();
         });
-
-        // fetch('http://localhost:3000/token', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         username: username,
-        //         password: password
-        //     })
-        // })
-        // .then(res => res.json())
-        // .then(data => {
-        //     // this.setToken(data.id_token);
-        // });
-
-        // const token = localStorage.getItem('id_token');
-
-        // fetch('http://localhost:3000/user', {
-        //     method: 'GET',
-        //     headers: {
-        //       'Authorization': 'Bearer ' + token
-        //     }
-        //   })
-        //   .then(res => res.json())
-        //   .then(data => { this.setProfile(data) })
-        //   .catch(err => { console.log(err) });
     }
 
     setToken(idToken){
