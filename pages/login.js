@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Layout from '../components/layout';
 import { Form } from 'semantic-ui-react';
-import { Router } from '../routes';
 import Domain from '../domain';
 import AuthService from '../utils/AuthService';
 const Auth = new AuthService(Domain);
@@ -21,7 +20,7 @@ class UserLogin extends Component {
         let password = this.state.password;
         
         Auth.login(username, password);
-        Router.pushRoute('/');
+        window.location.replace('/home');
     }
 
     handleChange = (e, { name, value }) => this.setState({ [name]: value })

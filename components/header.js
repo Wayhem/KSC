@@ -9,6 +9,11 @@ export default class Header extends Component{
         this.logout()
     }
 
+    handleHomeClick = (e) => {
+        e.preventDefault();
+        window.location.replace('/home');
+    }
+
     logout(){
         localStorage.removeItem('id_token');
         localStorage.removeItem('profile');
@@ -23,9 +28,9 @@ export default class Header extends Component{
 
         return(
             <Menu style={{ marginTop: '15px' }}> 
-                <Link route="/">
-                    <a className="item">TrustFund</a>
-                </Link>
+                <Menu.Item name='home' onClick={this.handleHomeClick}>
+                    TrustFund
+                </Menu.Item>
                 <Link route="/login">
                     <a className="item">Login</a>
                 </Link>
@@ -36,9 +41,9 @@ export default class Header extends Component{
                     Logout
                 </Menu.Item>
                 <Menu.Menu position="right">
-                    <Link route="/">
-                        <a className="item">Campaigns</a>
-                    </Link>
+                    <Menu.Item name='home' onClick={this.handleHomeClick}>
+                        Campaigns
+                    </Menu.Item>
                     <Link route="/campaigns/new">
                         <a className="item">+</a>
                     </Link>

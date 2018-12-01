@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Layout from '../components/layout';
 import { Form } from 'semantic-ui-react';
-import { Router } from '../routes';
 import Domain from '../domain';
 
 class UserRegister extends Component { 
@@ -13,7 +12,7 @@ class UserRegister extends Component {
     }
 
     routeRoot() {
-        Router.pushRoute('/');
+        window.location.replace('/home');
     }
 
     handleSubmit = (event) => {

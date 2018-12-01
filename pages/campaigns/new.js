@@ -41,7 +41,7 @@ class CampaignNew extends Component {
             .then(res => res.json())
             .then(data => { Auth.setProfile(data) })
             .catch(err => { console.log(err) });
-            Router.pushRoute('/');
+            window.location.replace('/home');
         } catch (err){
             this.setState({errorMessage: err.message});
         }
