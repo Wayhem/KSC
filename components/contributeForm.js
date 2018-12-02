@@ -9,13 +9,16 @@ import swal from 'sweetalert2';
 
 class ContributeForm extends Component {
     state ={
-        value: ''
+        value: '',
+        errorMessage: '',
+        loading: false
     }
 
     onSubmit = async (e) => {
         e.preventDefault();
         const Auth = new AuthService(Domain);
         const campaign = Campaign(this.props.address);
+        this.setState({ loading: true, errorMessage: '' });
         if (Auth.loggedIn()){
             try {
                 const accounts = await web3.eth.getAccounts();
@@ -32,7 +35,10 @@ class ContributeForm extends Component {
                     text: 'Something went wrong!',
                     footer: '<a href="https://jvilladev.com/#contact">Help me fix the code, click here!</a>'
                   })
+                this.setState({ errorMessage: err.message })
             }
+
+            this.setState({ loading: false, value: '' })
         } else {
             Router.pushRoute('/login');
             swal({
@@ -46,7 +52,7 @@ class ContributeForm extends Component {
 
     render() {
         return (
-            <Form onSubmit={this.onSubmit}>
+            <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
                 <Form.Field>
                     <label>Ammount to contribute</label>
                     <Input
@@ -56,7 +62,8 @@ class ContributeForm extends Component {
                         onChange={event => this.setState({ value: event.target.value })}
                     />
                 </Form.Field>
-                <Button primary>
+                <Message error header="Oops!" content={this.state.errorMessage} />
+                <Button primary loading={this.state.loading}>
                     Contribute!
                 </Button>
             </Form>
