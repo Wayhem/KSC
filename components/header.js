@@ -3,12 +3,53 @@ import { Menu } from 'semantic-ui-react';
 import { Link, Router } from '../routes';
 import AuthService from '../utils/AuthService';
 import Domain from '../domain';
+import swal from 'sweetalert2';
+const Auth = new AuthService(Domain)
 
 export default class Header extends Component{
     
     handleItemClick = (e) => {
-        const Auth = new AuthService(Domain)
-        Auth.logout(e)
+        if (Auth.loggedIn()){
+            Auth.logout(e)
+            swal(
+                'Done!',
+                'You have successfully logged out!',
+                'success'
+              )
+        } else {
+            swal({
+                type: 'error',
+                title: 'Oops...',
+                text: 'You are not logged In!',
+                footer: '<a href="/login">Click here to Log In!</a>'
+              })
+        }
+    }
+
+    handleRegister = (e) => {
+        e.preventDefault();
+        if (!Auth.loggedIn()){
+            Router.pushRoute('/register');
+        } else {
+            swal({
+                type: 'error',
+                title: 'Oops...',
+                text: 'You are already logged In!'
+              })
+        }
+    }
+
+    handleLogin = (e) => {
+        e.preventDefault();
+        if (!Auth.loggedIn()){
+            Router.pushRoute('/login');
+        } else {
+            swal({
+                type: 'error',
+                title: 'Oops...',
+                text: 'You are already logged In!'
+              })
+        }
     }
 
     handleHomeClick = (e) => {
@@ -31,12 +72,12 @@ export default class Header extends Component{
                 <Menu.Item name='home' onClick={this.handleHomeClick}>
                     TrustFund
                 </Menu.Item>
-                <Link route="/login">
-                    <a className="item">Login</a>
-                </Link>
-                <Link route="/register">
-                    <a className="item">Register</a>
-                </Link>
+                <Menu.Item name='login' onClick={this.handleLogin}>
+                    Login
+                </Menu.Item>
+                <Menu.Item name='register' onClick={this.handleRegister}>
+                    Register
+                </Menu.Item>
                 <Menu.Item name='logout' onClick={this.handleItemClick}>
                     Logout
                 </Menu.Item>

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import AuthService from './AuthService';
 import Domain from '../domain';
 import { Router } from '../routes';
+import swal from 'sweetalert2';
 
 export default function withAuth(AuthComponent) {
     const Auth = new AuthService(Domain)
@@ -16,6 +17,12 @@ export default function withAuth(AuthComponent) {
       componentDidMount () {
         if (!Auth.loggedIn()) {
           Router.pushRoute('/login');
+            swal({
+                type: 'warning',
+                title: 'Sorry!',
+                text: 'You need to be logged in to do that!',
+                footer: '<a href="/register">New user? click here to register.</a>'
+              })
         } else {
         this.setState({ isLoading: false })
         }

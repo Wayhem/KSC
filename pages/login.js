@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import { Form } from 'semantic-ui-react';
 import Domain from '../domain';
 import AuthService from '../utils/AuthService';
+import swal from 'sweetalert2';
 const Auth = new AuthService(Domain);
 
 class UserLogin extends Component { 
@@ -18,9 +19,21 @@ class UserLogin extends Component {
         this.state.domain = Domain;
         let username = this.state.username;
         let password = this.state.password;
-        
         Auth.login(username, password);
-        window.location.replace('/home');
+        //allow auth to set token
+        setTimeout( () => {
+            if (Auth.loggedIn()){
+                window.location.replace('/home');
+            } else {
+                swal({
+                    type: 'error',
+                    title: 'Oops..!',
+                    text: 'Username or password invalid!'
+                })
+                this.setState({ username: '', password: '' })
+            }
+        }, 1000);
+        
     }
 
     handleChange = (e, { name, value }) => this.setState({ [name]: value })
