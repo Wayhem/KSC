@@ -110,20 +110,42 @@ app.prepare().then(() => {
           res.sendStatus(403);
         } else {
           //If token is successfully verified, we can send the autorized data 
-          User.findOneAndUpdate({id_token: req.token}, {$push: {campaign: {address: req.body.campaign}}}, (err, foundUser)=>{
-            if(err){
-              console.log(err);
-            } else{
-              //found  user not the updated one
-              User.find({username: foundUser.username}, (err, foundUser) =>{
-                if (err) {
-                  console.log(err);
-                } else {
-                  return res.send(foundUser); 
-                }
-              }); 
-            }
-          });
+          console.log(req.body.campaign);
+          if (req.body.campaign){
+            User.findOneAndUpdate({id_token: req.token}, {$push: {campaign: {address: req.body.campaign}}}, (err, foundUser)=>{
+              if(err){
+                console.log(err);
+              } else{
+                //found  user not the updated one
+                User.find({username: foundUser.username}, (err, foundUser) =>{
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    return res.send(foundUser); 
+                  }
+                }); 
+              }
+            });
+          }
+          else if (req.body.contri) {
+            User.findOneAndUpdate({id_token: req.token}, {$push: {contributeIn: {address: req.body.contri}}}, (err, foundUser)=>{
+              if(err){
+                console.log(err);
+              } else{
+                //found  user not the updated one
+                User.find({username: foundUser.username}, (err, foundUser) =>{
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    return res.send(foundUser); 
+                  }
+                }); 
+              }
+            });
+          } else {
+            return res.redirect('/home');
+          }
+
         }
       })
     });

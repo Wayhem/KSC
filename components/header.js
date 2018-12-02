@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
-import { Link } from '../routes';
+import { Link, Router } from '../routes';
 import AuthService from '../utils/AuthService';
+import Domain from '../domain';
 
 export default class Header extends Component{
     
     handleItemClick = (e) => {
         const Auth = new AuthService(Domain)
-        Auth.logout()
+        Auth.logout(e)
     }
 
     handleHomeClick = (e) => {
         e.preventDefault();
-        window.location.replace('/home');
+        if (typeof window !== 'undefined'){
+            window.location.replace('/home');
+        } else {
+            //if it is being rendered on the server side, it will show 404 then the home page
+            //because it tries to find "index.js" in the folder but has problem rendering this current home page
+            //so 404's then lets express make the routing and works
+            //ALMOST NEVER HAPPENS!!
+            Router.pushRoute('/');
+        }
     }
     
     render(){

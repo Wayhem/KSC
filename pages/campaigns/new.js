@@ -4,9 +4,7 @@ import { Form, Button, Input, Message } from 'semantic-ui-react';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
 import withAuth from  '../../utils/withAuth';
-import AuthService from '../../utils/AuthService';
 import Domain from '../../domain';
-const Auth = new AuthService(Domain);
 
 class CampaignNew extends Component {
     state={
@@ -26,8 +24,7 @@ class CampaignNew extends Component {
                 });
             const campaigns = await factory.methods.getDeployedCampaigns().call();
             const token = localStorage.getItem('id_token');
-            const campaign = campaigns[campaigns.length-1];
-            console.log(campaign);
+            const campaign = campaigns.pop();
             fetch(`${Domain}/user`, {
                 method: 'PUT',
                 headers: {
@@ -38,7 +35,7 @@ class CampaignNew extends Component {
                 body: JSON.stringify({ campaign })
             })
             .then(res => res.json())
-            .then(data => { Auth.setProfile(data) })
+            .then(data => { this.props.auth.setProfile(data) })
             .catch(err => { console.log(err) });
             window.location.replace('/home');
         } catch (err){
