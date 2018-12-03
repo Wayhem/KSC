@@ -46,6 +46,7 @@ class RequestRow extends Component {
                         from: accounts[0]
                     });
                     this.setState({ contributor: false });
+                    window.location.replace(`/campaigns/${this.props.address}/requests`);
                 }
             } else if (profile.length){
                 var result = profile[0].contributeIn.map(campaign => ({ address: campaign.address }));
@@ -63,7 +64,6 @@ class RequestRow extends Component {
                             footer: '<a href="/home">Go to home page.</a>'
                         })
                         setTimeout(() => {
-                            console.log('nigger');
                             window.location.replace(`/campaigns/${this.props.address}`);
                         }, 3000)
                     }
@@ -75,6 +75,7 @@ class RequestRow extends Component {
                         from: accounts[0]
                     });
                     this.setState({ contributor: false });
+                    window.location.replace(`/campaigns/${this.props.address}/requests`);
                 }
             }
         } else {

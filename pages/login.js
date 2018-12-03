@@ -32,7 +32,7 @@ class UserLogin extends Component {
                 })
                 this.setState({ username: '', password: '' })
             }
-        }, 1000);
+        }, 2000);
         
     }
 

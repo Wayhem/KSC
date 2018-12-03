@@ -35,7 +35,7 @@ class ContributeForm extends Component {
                             this.setState({ store: false });
                         }
                     });
-                    if (store){
+                    if (this.state.store){
                         fetch(`${Domain}/user`, {
                             method: 'PUT',
                             headers: {
