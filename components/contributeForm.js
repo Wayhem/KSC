@@ -11,7 +11,8 @@ class ContributeForm extends Component {
     state ={
         value: '',
         errorMessage: '',
-        loading: false
+        loading: false,
+        store: true
     }
 
     onSubmit = async (e) => {
@@ -22,9 +23,32 @@ class ContributeForm extends Component {
         if (Auth.loggedIn()){
             try {
                 const accounts = await web3.eth.getAccounts();
+                const token = localStorage.getItem('id_token');
                 await campaign.methods.contribute().send({
                     from: accounts[0],
                     value: web3.utils.toWei(this.state.value, 'ether')
+                }).then(() => {
+                    const profile = Auth.getProfile();
+                    var result = profile.contributeIn.map(campaign => ({ address: campaign.address }));
+                    result.forEach((result) => {
+                        if (this.props.address == result.address){
+                            this.setState({ store: false });
+                        }
+                    });
+                    if (store){
+                        fetch(`${Domain}/user`, {
+                            method: 'PUT',
+                            headers: {
+                            'Authorization': 'Bearer ' + token,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ contri: this.props.address })
+                        })
+                        .then(res => res.json())
+                        .then(data => { Auth.setProfile(data) })
+                        .catch(err => { console.log(err) });
+                    }
                 });
 
                 window.location.replace(`/campaigns/${this.props.address}`);
