@@ -8,7 +8,7 @@
     "prestart": "next build",
     "dev": "node server.js",
     "build": "next build",
-    "start": "node server.js"
+    "start": "node server.js -p ${PORT}"
   },
   "author": "Jose Villarroel",
   "license": "MIT",
