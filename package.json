@@ -8,7 +8,7 @@
     "prestart": "next build",
     "dev": "node server.js",
     "build": "next build",
-    "start": "node server.js -p ${PORT}",
+    "start": "node server.js -p $PORT",
     "heroku-postbuild": "next build"
   },
   "author": "Jose Villarroel",
