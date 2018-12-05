@@ -9,7 +9,7 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "node server.js -p ${PORT}",
-    "heroku-postbuild": "heroku-nextjs-build"
+    "heroku-postbuild": "next build"
   },
   "author": "Jose Villarroel",
   "license": "MIT",
