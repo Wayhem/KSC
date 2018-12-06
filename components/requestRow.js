@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { Table, Button } from 'semantic-ui-react';
 import web3 from '../ethereum/web3';
 import AuthService from '../utils/AuthService';
-import Domain from 'domain';
 import Campaign from '../ethereum/campaign';
 import swal from 'sweetalert2';
-const Auth = new AuthService(Domain);
+const Auth = new AuthService();
 
 class RequestRow extends Component {
 

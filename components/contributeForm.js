@@ -3,7 +3,6 @@ import { Form, Input, Message, Button } from 'semantic-ui-react';
 import Campaign from '../ethereum/campaign';
 import web3 from '../ethereum/web3';
 import AuthService from '../utils/AuthService';
-import Domain from '../domain';
 import { Router } from '../routes';
 import swal from 'sweetalert2';
 
@@ -17,7 +16,7 @@ class ContributeForm extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
-        const Auth = new AuthService(Domain);
+        const Auth = new AuthService();
         const campaign = Campaign(this.props.address);
         this.setState({ loading: true, errorMessage: '' });
         if (Auth.loggedIn()){
@@ -29,14 +28,18 @@ class ContributeForm extends Component {
                     value: web3.utils.toWei(this.state.value, 'ether')
                 }).then(() => {
                     const profile = Auth.getProfile();
-                    var result = profile.contributeIn.map(campaign => ({ address: campaign.address }));
+                    if(!profile.length){
+                        var result = profile.contributeIn.map(campaign => ({ address: campaign.address }));
+                    } else if (profile.length) {
+                        var result = profile[0].contributeIn.map(campaign => ({ address: campaign.address }));
+                    }
                     result.forEach((result) => {
                         if (this.props.address == result.address){
                             this.setState({ store: false });
                         }
                     });
                     if (this.state.store){
-                        fetch(`${Domain}/user`, {
+                        fetch('/user', {
                             method: 'PUT',
                             headers: {
                             'Authorization': 'Bearer ' + token,

@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import Layout from '../components/layout';
 import { Form } from 'semantic-ui-react';
-import Domain from '../domain';
 
 class UserRegister extends Component { 
 
     state = {
         username: '',
-        password: '',
-        domain: ''
+        password: ''
     }
 
     routeRoot() {
@@ -17,11 +15,10 @@ class UserRegister extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.state.domain = Domain;
         let username = this.state.username;
         let password = this.state.password;
         
-        fetch(`${this.state.domain}/register`, {
+        fetch('/register', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

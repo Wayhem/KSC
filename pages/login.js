@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 import Layout from '../components/layout';
 import { Form } from 'semantic-ui-react';
-import Domain from '../domain';
 import AuthService from '../utils/AuthService';
 import swal from 'sweetalert2';
-const Auth = new AuthService(Domain);
+const Auth = new AuthService();
 
 class UserLogin extends Component { 
 
     state = {
         username: '',
-        password: '',
-        domain: ''
+        password: ''
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.state.domain = Domain;
         let username = this.state.username;
         let password = this.state.password;
         Auth.login(username, password);

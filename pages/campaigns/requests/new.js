@@ -19,7 +19,6 @@ class RequestNew extends Component {
 
     componentDidMount() {
         const profile = this.props.auth.getProfile();
-        //BUG PROBLEM sometimes says profile.campaign is undefined so can't map it
         //sometimes profile gets returned as an array, or object radomly
         if (!profile.length){
             var result = profile.campaign.map(campaign => ({ address: campaign.address }));

@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
 import { Link, Router } from '../routes';
 import AuthService from '../utils/AuthService';
-import Domain from '../domain';
 import swal from 'sweetalert2';
-const Auth = new AuthService(Domain)
+const Auth = new AuthService()
 
 export default class Header extends Component{
     

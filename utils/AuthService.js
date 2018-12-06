@@ -1,6 +1,5 @@
 export default class AuthService {
-    constructor(domain) {
-      this.domain = domain || 'http://localhost:3000'
+    constructor() {
       this.fetch = this.fetch.bind(this)
       this.login = this.login.bind(this)
       this.getProfile = this.getProfile.bind(this)
@@ -8,7 +7,7 @@ export default class AuthService {
   
     login(username, password) {
       // Get a token
-      return this.fetch(`${this.domain}/token`, {
+      return this.fetch('/token', {
         method: 'POST',
         body: JSON.stringify({
           username,
@@ -16,7 +15,7 @@ export default class AuthService {
         })
       }).then(res => {
         this.setToken(res.id_token)
-        return this.fetch(`${this.domain}/user`, {
+        return this.fetch('/user', {
           method: 'GET'
         })
       }).then(res => {

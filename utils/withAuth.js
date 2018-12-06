@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import AuthService from './AuthService';
-import Domain from '../domain';
 import { Router } from '../routes';
 import swal from 'sweetalert2';
 
 export default function withAuth(AuthComponent) {
-    const Auth = new AuthService(Domain)
+    const Auth = new AuthService();
     return class Authenticated extends Component {
       constructor(props) {
         super(props)
