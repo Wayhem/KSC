@@ -6,7 +6,7 @@ On the local side a small Express/Mongo/NextJS framework is running allowing use
 
 ## Deployment and testing
 
-This project package.json is ready to be deployed to Heroku and used on production, however, deployment on Heroku or locally first need to set some environment variables in order to work nicely. Be sure to download or clone the repo before starting and run `npm install` to install dependencies.
+This project package.json is ready to be deployed to Heroku and used on production, however, deployment on Heroku or locally first need to set some environment variables in order to work nicely. Be sure to download or clone the repo before starting and run `npm install` to install dependencies or if you don't want to go through so much trouble just to see it and test it [go to the instance of the dApp I deployed](https://trust-fund.herokuapp.com/home).
 
 ## Prerequisites
 
