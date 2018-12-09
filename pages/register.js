@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Layout from '../components/layout';
 import { Form } from 'semantic-ui-react';
+import AuthService from '../utils/AuthService';
+const Auth = new AuthService();
 
 class UserRegister extends Component { 
 
@@ -31,20 +33,10 @@ class UserRegister extends Component {
         })
         .then(res => res.json())
         .then(data => {
-            this.setToken(data.id_token);
-            this.setProfile(data);
+            Auth.setToken(data.id_token);
+            Auth.setProfile(data);
             this.routeRoot();
         });
-    }
-
-    setToken(idToken){
-        // Saves user token to localStorage
-        localStorage.setItem('id_token', idToken)
-    }
-
-    setProfile(profile){
-        // Saves profile data to localStorage
-        localStorage.setItem('profile', JSON.stringify(profile))
     }
 
     handleChange = (e, { name, value }) => this.setState({ [name]: value })

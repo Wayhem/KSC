@@ -22,45 +22,27 @@ class RequestNew extends Component {
         //sometimes profile gets returned as an array, or object radomly
         if (!profile.length){
             var result = profile.campaign.map(campaign => ({ address: campaign.address }));
-            result.forEach((result) => {
-                if (this.props.url.query.address == result.address){
-                    this.setState({ manager: true });
-                }
-            });
-            setTimeout(() => {
-                if (!this.state.manager){
-                    swal({
-                        type: 'warning',
-                        title: 'Sorry!',
-                        text: 'You need to be the manager of the campaign to do that!',
-                        footer: '<a href="/home">Go to home page.</a>'
-                    })
-                    setTimeout(() => {
-                        window.location.replace('/home');
-                    }, 3000)
-                }
-            }, 1000)
         } else if (profile.length) {
             var result = profile[0].campaign.map(campaign => ({ address: campaign.address }));
-            result.forEach((result) => {
-                if (this.props.url.query.address == result.address){
-                    this.setState({ manager: true });
-                }
-            });
-            setTimeout(() => {
-                if (!this.state.manager){
-                    swal({
-                        type: 'warning',
-                        title: 'Sorry!',
-                        text: 'You need to be the manager of the campaign to do that!',
-                        footer: '<a href="/home">Go to home page.</a>'
-                    })
-                    setTimeout(() => {
-                        window.location.replace('/home');
-                    }, 3000)
-                }
-            }, 1000)
         }
+        result.forEach((result) => {
+            if (this.props.url.query.address == result.address){
+                this.setState({ manager: true });
+            }
+        });
+        setTimeout(() => {
+            if (!this.state.manager){
+                swal({
+                    type: 'warning',
+                    title: 'Sorry!',
+                    text: 'You need to be the manager of the campaign to do that!',
+                    footer: '<a href="/home">Go to home page.</a>'
+                })
+                setTimeout(() => {
+                    window.location.replace('/home');
+                }, 3000)
+            }
+        }, 1000)
     }
 
     onSubmit = async e => {

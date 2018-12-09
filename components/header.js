@@ -25,10 +25,9 @@ export default class Header extends Component{
         }
     }
 
-    handleRegister = (e) => {
-        e.preventDefault();
+    handleStatus (route) {
         if (!Auth.loggedIn()){
-            Router.pushRoute('/register');
+            Router.pushRoute(route);
         } else {
             swal({
                 type: 'error',
@@ -38,17 +37,14 @@ export default class Header extends Component{
         }
     }
 
+    handleRegister = (e) => {
+        e.preventDefault();
+        this.handleStatus('/register');
+    }
+
     handleLogin = (e) => {
         e.preventDefault();
-        if (!Auth.loggedIn()){
-            Router.pushRoute('/login');
-        } else {
-            swal({
-                type: 'error',
-                title: 'Oops...',
-                text: 'You are already logged In!'
-              })
-        }
+        this.handleStatus('/login');
     }
 
     handleHomeClick = (e) => {
